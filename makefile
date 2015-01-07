@@ -2,6 +2,8 @@ ML	= ML
 LINK	= DOSLNK
 RM	= rm
 DISK	= LEECHUNG.vhd
+QEMU	= qemu-system-i386
+TERMINAL= konsole
 
 ML_FLAG = /c
 LINK_FLAG = /TINY ;
@@ -17,7 +19,12 @@ Loader	: Loader.com
 System	: Sys.com
 	dd if=$< of=$(DISK) count=1 bs=512 seek=1 conv=notrunc
 
-All	: Loader System
+all	: Loader System
+
+debug	:
+	$(TERMINAL) -e "$(QEMU) -S -s -monitor stdio -hda $(DISK) -serial null"
+	sleep 2
+	$(TERMINAL) -e "gdb -x gdbinit"
 
 clean	:
 	$(RM) *.com
