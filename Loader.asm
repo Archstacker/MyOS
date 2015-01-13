@@ -7,7 +7,7 @@ org 7c00h
 start:	jmp real_start
 DAPACK  db 10h
         db 0
-        dw 127
+        dw 255
         dw 8000h
         dw 0
         dd 1

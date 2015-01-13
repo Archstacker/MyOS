@@ -23,7 +23,7 @@ all	: Loader System
 
 debug	:
 	$(TERMINAL) -e "$(QEMU) -S -s -monitor stdio -hda $(DISK) -serial null"
-	sleep 2
+	sleep 1
 	$(TERMINAL) -e "gdb -x gdbinit"
 
 clean	:

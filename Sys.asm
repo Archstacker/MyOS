@@ -9,6 +9,21 @@ szHello	db	"Hello, My boot loader!", 0
 
 real_start:
 	invoke ShowStr, 10, 20, cs, addr szHello
+        mov al,13h
+        mov ah,0h
+        int 10h
+        xor ax,ax
+        mov si,ax
+        mov ax,0a000h
+        mov ds,ax
+        mov ax,880h
+        mov es,ax
+        mov bx,0
+        mov cx,0fa00h
+@@:     mov al,byte ptr es:[bx]
+        mov byte ptr ds:[bx],al
+        inc bx
+        loop @b
 	
 	jmp $
 
