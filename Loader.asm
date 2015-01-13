@@ -1,38 +1,38 @@
 	.model tiny
 
 CNT	 = 1
-ReadSector proto C mseg:word,moffset:word,sector:byte,sector_count:byte,line:byte,driver:byte
 	.code
-start:	mov ax, cs
+org 7c00h
+
+start:	jmp real_start
+DAPACK  db 10h
+        db 0
+        dw 127
+        dw 8000h
+        dw 0
+        dd 1
+        dd 0
+
+real_start:
+        mov ax, cs
 	mov ds, ax
 	
-	mov ax, 600H
+	mov ax, 0
 	mov ss, ax
-	mov sp, 0
+	mov sp, 7c00h
 	
 	; read sectors from sector 2
-	invoke ReadSector, 800H, 100H, 2, CNT, 0, 80H
+        mov si,offset DAPACK
+        mov ah,42h
+        mov dl,80h
+        int 13h
 	
 	mov ax, 800H
 	push ax
-	mov ax, 100H
+	mov ax, 000H
 	push ax
-	retf		; jmp to 800H:100H
+	retf		; jmp to 800H:000H
 
-ReadSector proc C uses ax bx cx dx es mseg:word,moffset:word,sector:byte,sector_count:byte,line:byte,driver:byte
-	mov ax, mseg
-	mov es, ax
-	mov bx, moffset
-	mov al, sector_count
-	mov ch, line
-	mov cl, sector
-	mov dl, driver
-	mov dh, 0
-	mov ah, 2
-	int 13h
-	
-	ret
-ReadSector endp
 	db  (510 - ($ - offset start)) dup(0)
 	db 55H, 0AAH
 	end start

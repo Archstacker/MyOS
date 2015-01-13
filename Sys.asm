@@ -3,7 +3,7 @@
 ShowStr	proto C row:byte, column:byte, sseg1:word, soffset1:word
 	
 	.code
-	org 100H
+	org 000H
 start:	jmp real_start
 szHello	db	"Hello, My boot loader!", 0
 
