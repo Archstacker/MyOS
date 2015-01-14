@@ -15,11 +15,13 @@ LINK_FLAG = /TINY ;
 	$(LINK) $< $(LINK_FLAG)
 
 Loader	: Loader.com
-	dd if=$< of=$(DISK) count=1 bs=512 seek=0 conv=notrunc
+	dd if=$< of=$(DISK) bs=512 seek=0 conv=notrunc
 System	: Sys.com
-	dd if=$< of=$(DISK) count=1 bs=512 seek=1 conv=notrunc
+	dd if=$< of=$(DISK) bs=512 seek=1 conv=notrunc
+Img	: img.bmp
+	tail --bytes 64000 $< | dd of=$(DISK) bs=512 seek=5 conv=notrunc
 
-all	: Loader System
+all	: Loader System Img
 
 debug	:
 	$(TERMINAL) -e "$(QEMU) -S -s -monitor stdio -hda $(DISK) -serial null"

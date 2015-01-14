@@ -1,6 +1,5 @@
 	.model tiny
 
-CNT	 = 1
 	.code
 org 7c00h
 
@@ -8,7 +7,7 @@ start:	jmp real_start
 DAPACK  db 10h
         db 0
         dw 255
-        dw 8000h
+        dw 8100h
         dw 0
         dd 1
         dd 0
@@ -29,9 +28,9 @@ real_start:
 	
 	mov ax, 800H
 	push ax
-	mov ax, 000H
+	mov ax, 100H
 	push ax
-	retf		; jmp to 800H:000H
+	retf		; jmp to 800H:100H
 
 	db  (510 - ($ - offset start)) dup(0)
 	db 55H, 0AAH
