@@ -29,7 +29,7 @@ real_start:
 	
 	mov ax, 800H
 	push ax
-	mov ax, 000H
+	mov ax, 0H
 	push ax
 	retf		; jmp to 800H:000H
 
